@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "535407607880",
+    "project_id": "spin-around-wunnakyaw",
+    "storage_bucket": "spin-around-wunnakyaw.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:535407607880:android:47edb5f971abcb4883987d",
+        "android_client_info": {
+          "package_name": "com.wunnakyaw.spinAround"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd1PveoW1BFbjgzqCsRARmqFCThCSzgr0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:535407607880:android:7e1e580dc4e1e0b183987d",
+        "android_client_info": {
+          "package_name": "com.wunnakyaw.spin_around"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd1PveoW1BFbjgzqCsRARmqFCThCSzgr0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
