@@ -22,18 +22,21 @@ class SingleSpinnerWheel extends StatelessWidget {
         title: EditableTitleWidget(
           initialTitle: wheelModel.title,
           onTitleChanged: (value) {
-            wheelModel.title = value;
+            context.read<SingleSpinnerWheelCubit>().updateTitle(value);
           },
         ),
         actions: [],
       ),
-      body: BlocConsumer<SingleSpinnerWheelCubit, SingleSpinnerWheelState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return Container();
+      body: BlocBuilder<SingleSpinnerWheelCubit, SpinnerWheelModel>(
+        builder: (context, wheelModel) {
+          return Center(child: Text(wheelModel.title));
         },
       ),
       floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.add,
+          size: 30,
+        ),
         onPressed: () {},
       ),
     );

@@ -4,8 +4,8 @@ import 'package:spin_around/config/app_config.dart';
 import 'package:spin_around/data/models/spinner_wheel_model.dart';
 import 'package:spin_around/global/editable_text_field/editabe_text_field_cubit.dart';
 import 'package:spin_around/modules/auth/bloc/auth_cubit/auth_cubit.dart';
-import 'package:spin_around/modules/auth/bloc/create_profile_cubit/create_profile_cubit.dart';
-import 'package:spin_around/modules/auth/views/create_profile.dart';
+import 'package:spin_around/modules/profile/bloc/create_profile_cubit/create_profile_cubit.dart';
+import 'package:spin_around/modules/profile/views/create_profile.dart';
 import 'package:spin_around/modules/auth/views/splash_screen.dart';
 import 'package:spin_around/modules/home/bloc/bottom_nav_cubit/bottom_nav_cubit.dart';
 import 'package:spin_around/modules/home/views/home.dart';
@@ -76,7 +76,7 @@ class Routes {
             return MultiBlocProvider(
               providers: [
                 BlocProvider(
-                  create: (context) => SingleSpinnerWheelCubit(),
+                  create: (context) => SingleSpinnerWheelCubit(wheelModel),
                 ),
                 BlocProvider(
                   create: (_) => TitleCubit(),

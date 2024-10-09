@@ -43,8 +43,13 @@ class EditableTitleWidget extends StatelessWidget {
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(25),
                   ],
-                  decoration: const InputDecoration(
-                    border: InputBorder.none, // No underline
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 12),
+                    isDense: true, // Reduces the height
                   ),
                   style: const TextStyle(
                     fontSize: 20,
@@ -56,8 +61,18 @@ class EditableTitleWidget extends StatelessWidget {
                     if (onTitleChanged != null) {
                       onTitleChanged!(newValue);
                     }
+                    FocusScope.of(context).unfocus(); // Remove focus
                     context.read<TitleCubit>().toggleEditing(); // Exit editing mode
                   },
+                  onTapOutside: (newValue) {
+                    context.read<TextCubit>().updateTitle(_controller.text);
+                    // Notify parent via callback
+                    if (onTitleChanged != null) {
+                      onTitleChanged!(_controller.text);
+                    }
+                    FocusScope.of(context).unfocus(); // Remove focus
+                    context.read<TitleCubit>().toggleEditing(); // Exit editing mode
+                  }
                 );
               },
             )
