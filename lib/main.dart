@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
+import 'package:spin_around/config/routes.dart';
 import 'package:spin_around/firebase_options.dart';
 
 void main() async {
@@ -26,41 +27,41 @@ class _SpinAroundAppState extends State<SpinAroundApp> {
     FortuneItem(child: Text('Obi-Wan Kenobi')),
   ];
   void addItem() {
-    setState(() {
+    // setState(() {
       itemList.add(FortuneItem(child: Text('Item #$count')));
-    });
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Spin Around',
       debugShowCheckedModeBanner: false,
-      // initialRoute: '/auth',
-      home: Scaffold(
-        body: Column(
-          children: [
-            Expanded(
-              child: FortuneWheel(
-                physics: CircularPanPhysics(
-                  duration: Duration(seconds: 1),
-                  curve: Curves.decelerate,
-                ),
-                hapticImpact: HapticImpact.medium,
-                onFling: () {
-                  // controller.add(1);
-                },
-                // selected: controller.stream,
-                items: itemList,
-              ),
-            ),
-            ElevatedButton(
-              onPressed: addItem,
-              child: Text('Add Item'),
-            ),
-          ],
-        ),
-      ),
+      routerConfig: Routes.router,
+      // home: Scaffold(
+      //   body: Column(
+      //     children: [
+      //       Expanded(
+      //         child: FortuneWheel(
+      //           physics: CircularPanPhysics(
+      //             duration: Duration(seconds: 1),
+      //             curve: Curves.decelerate,
+      //           ),
+      //           hapticImpact: HapticImpact.medium,
+      //           onFling: () {
+      //             // controller.add(1);
+      //           },
+      //           // selected: controller.stream,
+      //           items: itemList,
+      //         ),
+      //       ),
+      //       ElevatedButton(
+      //         onPressed: addItem,
+      //         child: Text('Add Item'),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
