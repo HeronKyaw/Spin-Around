@@ -72,7 +72,8 @@ class Routes {
           name: SingleSpinnerWheel.tag,
           path: '/single-spinner-wheel',
           builder: (context, state) {
-            SpinnerWheelModel? wheelModel = state.extra as SpinnerWheelModel? ?? SpinnerWheelModel();
+            SpinnerWheelModel? wheelModel =
+                state.extra as SpinnerWheelModel? ?? SpinnerWheelModel();
             return MultiBlocProvider(
               providers: [
                 BlocProvider(

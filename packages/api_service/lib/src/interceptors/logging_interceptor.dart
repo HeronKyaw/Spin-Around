@@ -6,7 +6,8 @@ class LoggingInterceptor extends Interceptor {
   /// Logs the request data before it is sent.
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    debugPrint('Request [${options.method}] => PATH: ${options.path}, DATA: ${options.data}');
+    debugPrint(
+        'Request [${options.method}] => PATH: ${options.path}, DATA: ${options.data}');
     super.onRequest(options, handler);
   }
 
@@ -20,7 +21,8 @@ class LoggingInterceptor extends Interceptor {
   /// Logs errors encountered during the request or response cycle.
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    debugPrint('Error [${err.response?.statusCode}] => Message: ${err.message}');
+    debugPrint(
+        'Error [${err.response?.statusCode}] => Message: ${err.message}');
     super.onError(err, handler);
   }
 }

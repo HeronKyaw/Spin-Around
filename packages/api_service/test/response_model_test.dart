@@ -12,7 +12,7 @@ void main() {
 
       final response = ResponseModel.fromJson(
         json: jsonResponse,
-        parseData: (data) => data,  // Directly return data as it is
+        parseData: (data) => data, // Directly return data as it is
       );
 
       expect(response.data, equals({'id': 1, 'name': 'Test'}));

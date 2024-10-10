@@ -35,58 +35,63 @@ class EditableTitleWidget extends StatelessWidget {
             },
             child: isEditing
                 ? BlocBuilder<TextCubit, String>(
-              builder: (context, title) {
-                return TextField(
-                  controller: _controller,
-                  focusNode: _focusNode,
-                  autofocus: true,
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(25),
-                  ],
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 12),
-                    isDense: true, // Reduces the height
-                  ),
-                  style: const TextStyle(
-                    fontSize: 20,
-                  ),
-                  // Update title when the user finishes editing
-                  onSubmitted: (newValue) {
-                    context.read<TextCubit>().updateTitle(newValue);
-                    // Notify parent via callback
-                    if (onTitleChanged != null) {
-                      onTitleChanged!(newValue);
-                    }
-                    FocusScope.of(context).unfocus(); // Remove focus
-                    context.read<TitleCubit>().toggleEditing(); // Exit editing mode
-                  },
-                  onTapOutside: (newValue) {
-                    context.read<TextCubit>().updateTitle(_controller.text);
-                    // Notify parent via callback
-                    if (onTitleChanged != null) {
-                      onTitleChanged!(_controller.text);
-                    }
-                    FocusScope.of(context).unfocus(); // Remove focus
-                    context.read<TitleCubit>().toggleEditing(); // Exit editing mode
-                  }
-                );
-              },
-            )
+                    builder: (context, title) {
+                      return TextField(
+                          controller: _controller,
+                          focusNode: _focusNode,
+                          autofocus: true,
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(25),
+                          ],
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 12),
+                            isDense: true, // Reduces the height
+                          ),
+                          style: const TextStyle(
+                            fontSize: 20,
+                          ),
+                          // Update title when the user finishes editing
+                          onSubmitted: (newValue) {
+                            context.read<TextCubit>().updateTitle(newValue);
+                            // Notify parent via callback
+                            if (onTitleChanged != null) {
+                              onTitleChanged!(newValue);
+                            }
+                            FocusScope.of(context).unfocus(); // Remove focus
+                            context
+                                .read<TitleCubit>()
+                                .toggleEditing(); // Exit editing mode
+                          },
+                          onTapOutside: (newValue) {
+                            context
+                                .read<TextCubit>()
+                                .updateTitle(_controller.text);
+                            // Notify parent via callback
+                            if (onTitleChanged != null) {
+                              onTitleChanged!(_controller.text);
+                            }
+                            FocusScope.of(context).unfocus(); // Remove focus
+                            context
+                                .read<TitleCubit>()
+                                .toggleEditing(); // Exit editing mode
+                          });
+                    },
+                  )
                 : BlocBuilder<TextCubit, String>(
-              builder: (context, title) {
-                return Text(
-                  title.isEmpty ? 'Tap to edit' : title,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.black87,
+                    builder: (context, title) {
+                      return Text(
+                        title.isEmpty ? 'Tap to edit' : title,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.black87,
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
           );
         },
       ),

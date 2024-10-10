@@ -1,3 +1,4 @@
 import 'package:flutter/material.dart';
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: 'SpinAround Navigator');
+final GlobalKey<NavigatorState> navigatorKey =
+    GlobalKey(debugLabel: 'SpinAround Navigator');

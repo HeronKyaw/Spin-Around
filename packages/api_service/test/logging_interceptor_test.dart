@@ -4,10 +4,18 @@ import 'package:mockito/mockito.dart';
 import 'package:dio/dio.dart';
 
 class MockRequestOptions extends Mock implements RequestOptions {}
+
 class MockResponse extends Mock implements Response {}
-class MockRequestInterceptorHandler extends Mock implements RequestInterceptorHandler {}
-class MockResponseInterceptorHandler extends Mock implements ResponseInterceptorHandler {}
-class MockErrorInterceptorHandler extends Mock implements ErrorInterceptorHandler {}
+
+class MockRequestInterceptorHandler extends Mock
+    implements RequestInterceptorHandler {}
+
+class MockResponseInterceptorHandler extends Mock
+    implements ResponseInterceptorHandler {}
+
+class MockErrorInterceptorHandler extends Mock
+    implements ErrorInterceptorHandler {}
+
 class MockDioException extends Mock implements DioException {}
 
 void main() {

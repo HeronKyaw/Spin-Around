@@ -29,7 +29,7 @@ class _SpinAroundAppState extends State<SpinAroundApp> {
   ];
   void addItem() {
     // setState(() {
-      itemList.add(FortuneItem(child: Text('Item #$count')));
+    itemList.add(FortuneItem(child: Text('Item #$count')));
     // });
   }
 
