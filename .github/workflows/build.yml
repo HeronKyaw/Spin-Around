@@ -26,17 +26,12 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          # flutter-version: '3.16.8'
-          # ^ If you want to use a specific version of flutter
-      
-      # Fetches proj dependencies from pub
-      - name: Install dependencies
-        run: flutter pub get
-        # ^ If you want to use a specific version of flutter
+          flutter-version: '3.24.3'
 
-        # Run pub get in the local packages (e.g., api_service)
-      - name: Install dependencies in local packages
+      # Fetches all dependencies from pub
+      - name: Install dependencies
         run: |
+          flutter pub get
           cd packages/api_service
           flutter pub get
           cd ../authentication_repository
@@ -44,12 +39,19 @@ jobs:
           cd ../cache
           flutter pub get
           cd ../..
-      
-      # Verifies if the dart code is formatted well
-      - name: Verify formatting
-        run: dart format --output=none --set-exit-if-changed .
-        # --set-exit-if-changed stops execution if the any code is not well formatted
-        # --output=none prints files which needs to be formatted
+
+      # Format the code
+      - name: Format Dart code
+        run: dart format .
+
+      # Commit and push any changes if formatting was required
+      - name: Commit and push changes if formatting was needed
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git add .
+          git commit -m "Auto-format code by GitHub Actions" || echo "No changes to commit"
+          git push
       
       # Checks for Symantic errors. Can be configured using analysis_options.yaml
       - name: Analyze project source
