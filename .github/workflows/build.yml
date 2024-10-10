@@ -47,7 +47,7 @@ jobs:
       # Commit and push any changes if formatting was required
       - name: Commit and push changes if formatting was needed
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
