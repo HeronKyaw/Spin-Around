@@ -15,6 +15,9 @@ jobs:
     # The machine, we can also use windows-latest or ubuntu-latest
     # We are choosing macos-latest because we will be also building for iOS
     runs-on: macos-latest
+    permissions: # Job-level permissions configuration starts here
+      contents: write           # 'write' access to repository contents
+      pull-requests: write      # 'write' access to pull requests
 
     steps:
 
@@ -45,16 +48,16 @@ jobs:
         run: dart format .
 
       # Commit and push any changes if formatting was required
-      - name: Commit and push changes if formatting was needed
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Commit file
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
-          git add .
-          git commit -m "Auto-format code by GitHub Actions" || echo "No changes to commit"
-          git push
-      
+          git commit -a -m "Auto-format code by GitHub Actions" || echo "No changes to commit"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
       
       # Checks for Symantic errors. Can be configured using analysis_options.yaml
       - name: Analyze project source
