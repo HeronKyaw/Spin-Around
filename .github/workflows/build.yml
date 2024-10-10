@@ -33,10 +33,21 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
         # ^ If you want to use a specific version of flutter
+
+        # Run pub get in the local packages (e.g., api_service)
+      - name: Install dependencies in local packages
+        run: |
+          cd packages/api_service
+          flutter pub get
+          cd ../authentication_repository
+          flutter pub get
+          cd ../cache
+          flutter pub get
+          cd ../..
       
       # Verifies if the dart code is formatted well
-      # - name: Verify formatting
-       # run: dart format --output=none --set-exit-if-changed .
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
         # --set-exit-if-changed stops execution if the any code is not well formatted
         # --output=none prints files which needs to be formatted
       
