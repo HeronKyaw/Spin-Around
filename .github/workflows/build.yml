@@ -53,7 +53,7 @@ jobs:
           git config --local user.email "actions@github.com"
           git add .
           git commit -m "Auto-format code by GitHub Actions" || echo "No changes to commit"
-          git push https://${{ secrets.GH_TOKEN }}@github.com/HeronKyaw/Spin-Around.git
+          git push
       
       
       # Checks for Symantic errors. Can be configured using analysis_options.yaml
