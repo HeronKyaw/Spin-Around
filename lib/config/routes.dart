@@ -10,13 +10,11 @@ import 'package:spin_around/modules/auth/views/splash_screen.dart';
 import 'package:spin_around/modules/home/bloc/bottom_nav_cubit/bottom_nav_cubit.dart';
 import 'package:spin_around/modules/home/views/home.dart';
 import 'package:spin_around/modules/spinner_wheel/bloc/single_spinner_wheel_cubit/single_spinner_wheel_cubit.dart';
-import 'package:spin_around/modules/spinner_wheel/bloc/spinner_wheel_list_cubit/spinner_wheel_list_cubit.dart';
 import 'package:spin_around/modules/spinner_wheel/views/single_spinner_wheel.dart';
-import 'package:spin_around/modules/spinner_wheel/views/spinner_wheel_list_screen.dart';
 
 class Routes {
   static final GoRouter router = GoRouter(
-    initialLocation: '/single-spinner-wheel',
+    initialLocation: '/home',
     debugLogDiagnostics: true,
     navigatorKey: navigatorKey,
     routes: [
@@ -56,18 +54,18 @@ class Routes {
           child: CreateProfile(),
         ),
       ),
-      GoRoute(
-        name: SpinnerWheelListScreen.tag,
-        path: '/spinner-wheel-list',
-        builder: (context, state) => MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) => SpinnerWheelListCubit(),
-            ),
-          ],
-          child: SpinnerWheelListScreen(),
-        ),
-      ),
+      // GoRoute(
+      //   name: SpinnerWheelListScreen.tag,
+      //   path: '/spinner-wheel-list',
+      //   builder: (context, state) => MultiBlocProvider(
+      //     providers: [
+      //       BlocProvider(
+      //         create: (context) => SpinnerWheelListCubit(),
+      //       ),
+      //     ],
+      //     child: SpinnerWheelListScreen(),
+      //   ),
+      // ),
       GoRoute(
           name: SingleSpinnerWheel.tag,
           path: '/single-spinner-wheel',

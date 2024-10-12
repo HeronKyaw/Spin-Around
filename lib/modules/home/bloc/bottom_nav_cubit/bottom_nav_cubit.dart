@@ -10,13 +10,10 @@ class BottomNavCubit extends Cubit<BottomNavState> {
     switch (index) {
       case 0:
         emit(HomeTab());
-        break;
       case 1:
         emit(SearchTab());
-        break;
       case 2:
         emit(ProfileTab());
-        break;
     }
   }
 }

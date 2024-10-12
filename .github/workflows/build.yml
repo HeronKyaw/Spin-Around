@@ -59,7 +59,7 @@ jobs:
         with:
           github_token: ${{ secrets.GH_TOKEN }}
       
-      # Checks for Symantic errors. Can be configured using analysis_options.yaml
+      # Checks for Semantic errors. Can be configured using analysis_options.yaml
       - name: Analyze project source
         run: flutter analyze
         # optionally use --fatal-warnings to stop execution if any warnings are found

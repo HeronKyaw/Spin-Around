@@ -1,5 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:spin_around/config/routes.dart';
 import 'package:spin_around/firebase_options.dart';
@@ -35,7 +35,7 @@ class _SpinAroundAppState extends State<SpinAroundApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return CupertinoApp.router(
       title: 'Spin Around',
       debugShowCheckedModeBanner: false,
       routerConfig: Routes.router,
