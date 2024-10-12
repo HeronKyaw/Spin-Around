@@ -52,7 +52,8 @@ class SpinnerWheelListCubit extends Cubit<SpinnerWheelListState> {
     required int id,
     required List<SpinnerWheelModel> existedModelList,
   }) {
-    final SpinnerWheelModel wheelModel = existedModelList.firstWhere((model) => model.id == id);
+    final SpinnerWheelModel wheelModel =
+        existedModelList.firstWhere((model) => model.id == id);
     wheelModel.isPinned = !wheelModel.isPinned;
 
     // Emit the updated model list
