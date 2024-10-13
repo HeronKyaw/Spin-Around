@@ -31,7 +31,9 @@ class SingleSpinnerWheel extends StatelessWidget {
         child: BlocBuilder<SingleSpinnerWheelCubit, SpinnerWheelModel>(
           builder: (context, wheelModel) {
             return Center(
-              child: Text(wheelModel.title),
+              child: Text(
+                wheelModel.title,
+              ),
             );
           },
         ),
