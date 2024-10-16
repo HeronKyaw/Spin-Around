@@ -40,12 +40,8 @@ class Home extends StatelessWidget {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.person),
-            label: 'Profile',
+            icon: Icon(CupertinoIcons.settings),
+            label: 'Setting',
           ),
         ],
       ),

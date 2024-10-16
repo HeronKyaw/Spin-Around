@@ -36,6 +36,9 @@ class _SpinAroundAppState extends State<SpinAroundApp> {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp.router(
+      theme: CupertinoThemeData(
+        brightness: Brightness.dark,
+      ),
       title: 'Spin Around',
       debugShowCheckedModeBanner: false,
       routerConfig: Routes.router,

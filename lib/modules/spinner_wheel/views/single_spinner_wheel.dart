@@ -38,18 +38,6 @@ class SingleSpinnerWheel extends StatelessWidget {
           },
         ),
       ),
-      // Cupertino Button as floating action button replacement
-      // floatingActionButton: CupertinoButton(
-      //   color: CupertinoColors.activeBlue,
-      //   padding: EdgeInsets.zero,
-      //   child: Icon(
-      //     CupertinoIcons.add,
-      //     size: 30,
-      //   ),
-      //   onPressed: () {
-      //     // Add your onPressed action here
-      //   },
-      // ),
     );
   }
 }
