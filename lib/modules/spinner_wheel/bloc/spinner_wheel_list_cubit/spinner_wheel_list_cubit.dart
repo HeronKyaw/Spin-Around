@@ -56,7 +56,15 @@ class SpinnerWheelListCubit extends Cubit<SpinnerWheelListState> {
         existedModelList.firstWhere((model) => model.id == id);
     wheelModel.isPinned = !wheelModel.isPinned;
 
+    // Sort the list with pinned items on top, followed by unpinned, sorted by modified date
+    List<SpinnerWheelModel> sortedWheelList = List.from(existedModelList)
+      ..sort((a, b) {
+        if (a.isPinned && !b.isPinned) return -1;
+        if (!a.isPinned && b.isPinned) return 1;
+        return b.modifiedDate.compareTo(a.modifiedDate); // Sort by modified date
+      });
+
     // Emit the updated model list
-    emit(SpinnerWheelListFetched(existedModelList));
+    emit(SpinnerWheelListFetched(sortedWheelList));
   }
 }

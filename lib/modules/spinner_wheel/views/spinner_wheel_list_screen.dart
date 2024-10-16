@@ -86,36 +86,32 @@ class SpinnerWheelListScreen extends StatelessWidget {
                 List<SpinnerWheelModel> unpinnedWheelList =
                     wheelList.where((w) => !w.isPinned).toList();
 
-                return AnimatedSwitcher(
-                  duration: Duration(
-                      milliseconds: 300), // Adjust duration for smoothness
-                  child: Column(
-                    children: [
-                      if (pinnedWheelList.isNotEmpty) ...[
-                        CupertinoListSection.insetGrouped(
-                          header: Text('Pinned List'),
-                          children: pinnedWheelList.map((wheelModel) {
-                            return customContextMenuBuilder(
-                              context,
-                              wheelModel: wheelModel,
-                              wheelList: wheelList,
-                            );
-                          }).toList(),
-                        ),
-                      ],
-                      if (unpinnedWheelList.isNotEmpty) ...[
-                        CupertinoListSection.insetGrouped(
-                          children: unpinnedWheelList.map((wheelModel) {
-                            return customContextMenuBuilder(
-                              context,
-                              wheelModel: wheelModel,
-                              wheelList: wheelList,
-                            );
-                          }).toList(),
-                        ),
-                      ],
+                return Column(
+                  children: [
+                    if (pinnedWheelList.isNotEmpty) ...[
+                      CupertinoListSection.insetGrouped(
+                        header: Text('Pinned List'),
+                        children: pinnedWheelList.map((wheelModel) {
+                          return customContextMenuBuilder(
+                            context,
+                            wheelModel: wheelModel,
+                            wheelList: wheelList,
+                          );
+                        }).toList(),
+                      ),
                     ],
-                  ),
+                    if (unpinnedWheelList.isNotEmpty) ...[
+                      CupertinoListSection.insetGrouped(
+                        children: unpinnedWheelList.map((wheelModel) {
+                          return customContextMenuBuilder(
+                            context,
+                            wheelModel: wheelModel,
+                            wheelList: wheelList,
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ],
                 );
               }
             } else {
@@ -146,12 +142,18 @@ class SpinnerWheelListScreen extends StatelessWidget {
                     ? CupertinoIcons.pin_slash
                     : CupertinoIcons.pin,
               ),
-              callback: () {
-                // Navigator.pop(context); // Close the context menu
-                context.read<SpinnerWheelListCubit>().updatePinList(
-                      id: wheelModel.id,
-                      existedModelList: wheelList,
-                    );
+              callback: () async {
+                await Future.delayed(
+                  const Duration(milliseconds: 350),
+                  () {
+                    if (context.mounted) {
+                      context.read<SpinnerWheelListCubit>().updatePinList(
+                            id: wheelModel.id,
+                            existedModelList: wheelList,
+                          );
+                    }
+                  },
+                );
               },
             ),
             MenuAction(
@@ -174,27 +176,24 @@ class SpinnerWheelListScreen extends StatelessWidget {
     BuildContext context, {
     required SpinnerWheelModel wheelModel,
   }) {
-    return SizedBox(
-      width: 350,
-      child: CupertinoListTile.notched(
-        leadingSize: 40,
-        leading: Container(
-          decoration: BoxDecoration(
-            color: CupertinoColors.activeGreen,
-            borderRadius: BorderRadius.circular(25),
-          ),
+    return CupertinoListTile.notched(
+      leadingSize: 40,
+      leading: Container(
+        decoration: BoxDecoration(
+          color: CupertinoColors.activeGreen,
+          borderRadius: BorderRadius.circular(25),
         ),
-        title: Text(wheelModel.title),
-        subtitle: Text(
-          wheelModel.itemList.length.toString(),
-        ),
-        additionalInfo:
-            wheelModel.isPinned ? Icon(CupertinoIcons.pin_fill) : null,
-        trailing: CupertinoListTileChevron(),
-        onTap: () => context.pushNamed(
-          SingleSpinnerWheel.tag,
-          extra: wheelModel,
-        ),
+      ),
+      title: Text(wheelModel.title),
+      subtitle: Text(
+        wheelModel.itemList.length.toString(),
+      ),
+      additionalInfo:
+          wheelModel.isPinned ? Icon(CupertinoIcons.pin_fill) : null,
+      trailing: CupertinoListTileChevron(),
+      onTap: () => context.pushNamed(
+        SingleSpinnerWheel.tag,
+        extra: wheelModel,
       ),
     );
   }
