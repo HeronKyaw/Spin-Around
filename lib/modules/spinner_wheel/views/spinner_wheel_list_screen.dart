@@ -87,7 +87,8 @@ class SpinnerWheelListScreen extends StatelessWidget {
                     wheelList.where((w) => !w.isPinned).toList();
 
                 return AnimatedSwitcher(
-                  duration: Duration(milliseconds: 300), // Adjust duration for smoothness
+                  duration: Duration(
+                      milliseconds: 300), // Adjust duration for smoothness
                   child: Column(
                     children: [
                       if (pinnedWheelList.isNotEmpty) ...[
