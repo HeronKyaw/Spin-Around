@@ -23,4 +23,11 @@ class UpdateWheelCubit extends Cubit<UpdateWheelState> {
     final updatedItems = List<String>.from(state.items)..removeAt(index);
     emit(state.copyWith(items: updatedItems));
   }
+
+  // Method to update a specific item in the list
+  void updateItem(int index, String newItem) {
+    final updatedItems = List<String>.from(state.items);
+    updatedItems[index] = newItem;
+    emit(state.copyWith(items: updatedItems));
+  }
 }

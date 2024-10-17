@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spin_around/data/models/spinner_wheel_model.dart';
 import 'package:spin_around/global/custom_dialog.dart';
+import 'package:spin_around/global/editable_text_field/editable_text_field.dart';
 import 'package:spin_around/modules/spinner_wheel/bloc/update_wheel_cubit/update_wheel_cubit.dart';
 
 class UpdateWheelPage extends StatelessWidget {
@@ -36,11 +37,9 @@ class UpdateWheelPage extends StatelessWidget {
           ],
         ),
         trailing: GestureDetector(
-          child: Text(
+          child: const Text(
             'Save',
-            style: TextStyle(
-              color: CupertinoColors.activeBlue,
-            ),
+            style: TextStyle(color: CupertinoColors.activeBlue),
           ),
           onTap: () {
             final wheelCubit = context.read<UpdateWheelCubit>();
@@ -55,15 +54,13 @@ class UpdateWheelPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // TextField for the wheel name using CupertinoTextField
+            // Wheel Name using CupertinoTextField
             BlocBuilder<UpdateWheelCubit, UpdateWheelState>(
               builder: (context, state) {
                 return CupertinoTextField(
                   placeholder: 'Wheel Name',
                   onChanged: (newTitle) {
-                    context
-                        .read<UpdateWheelCubit>()
-                        .updateTitle(titleController.text);
+                    context.read<UpdateWheelCubit>().updateTitle(newTitle);
                   },
                   controller: titleController,
                   padding: EdgeInsets.all(16),
@@ -75,35 +72,46 @@ class UpdateWheelPage extends StatelessWidget {
               },
             ),
             const SizedBox(height: 20),
-
-            // Dynamic list of items using a Cupertino List
+            // Items Section Title + Add Button
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Items',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  child: const Icon(CupertinoIcons.add, color: CupertinoColors.activeBlue),
+                  onPressed: () {
+                    context.read<UpdateWheelCubit>().addItem('New Item');
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 15),
             Expanded(
               child: BlocBuilder<UpdateWheelCubit, UpdateWheelState>(
                 builder: (context, state) {
                   return ListView.builder(
                     itemCount: state.items.length,
                     itemBuilder: (context, index) {
-                      return CupertinoListTile(
-                        title: Text(state.items[index]),
-                        trailing: CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          child: Icon(CupertinoIcons.delete,
-                              color: CupertinoColors.destructiveRed),
-                          onPressed: () {
-                            if (state.items.length > 2) {
-                              context
-                                  .read<UpdateWheelCubit>()
-                                  .removeItem(index);
-                            } else {
-                              CustomDialog.showWarningDialog(
-                                context,
-                                title: 'Remove Item',
-                                body:
-                                    'You must have at least two items to work.',
-                              );
-                            }
-                          },
-                        ),
+                      return EditableTitleWidget(
+                        initialText: state.items[index],
+                        onTextChanged: (newText) {
+                          context.read<UpdateWheelCubit>().updateItem(index, newText);
+                        },
+                        onDelete: () {
+                          if (state.items.length > 2) {
+                            context.read<UpdateWheelCubit>().removeItem(index);
+                          } else {
+                            CustomDialog.showWarningDialog(
+                              context,
+                              title: 'Remove Item',
+                              body: 'You must have at least two items to work.',
+                            );
+                          }
+                        },
                       );
                     },
                   );

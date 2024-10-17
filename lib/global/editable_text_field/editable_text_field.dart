@@ -1,97 +1,118 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spin_around/global/editable_text_field/editabe_text_field_cubit.dart';
 
 class EditableTitleWidget extends StatelessWidget {
-  final String? initialTitle;
-  final Function(String)? onTitleChanged;
-  EditableTitleWidget({super.key, this.initialTitle, this.onTitleChanged});
+  final String? initialText;
+  final Function(String)? onTextChanged;
+  final VoidCallback onDelete; // Callback for delete action
+  final int maxLength;
+
+  EditableTitleWidget({
+    super.key,
+    this.initialText,
+    this.onTextChanged,
+    required this.onDelete, // Require delete callback
+    this.maxLength = 25, // Allow a longer length for list items
+  });
 
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    // Set the initial title value from the model or default to empty string
-    _controller.text = initialTitle ?? '';
+    _controller.text = initialText ?? '';
 
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => TitleCubit()),
-        BlocProvider(create: (_) => TextCubit(initialTitle ?? '')),
+        BlocProvider(create: (_) => TextCubit(initialText ?? '')),
       ],
       child: BlocBuilder<TitleCubit, bool>(
         builder: (context, isEditing) {
+          context.read<TextCubit>().updateTitle(_controller.text);
           return GestureDetector(
-            onTap: () {
-              // Toggle editing state on tap
-              context.read<TitleCubit>().toggleEditing();
-
-              // If we're entering editing mode, request focus
+            onDoubleTap: () {
               if (!isEditing) {
-                _focusNode.requestFocus();
+                context.read<TitleCubit>().toggleEditing();
+                if (!isEditing) {
+                  _focusNode.requestFocus();
+                }
               }
             },
-            child: isEditing
-                ? BlocBuilder<TextCubit, String>(
-                    builder: (context, title) {
-                      return TextField(
-                          controller: _controller,
-                          focusNode: _focusNode,
-                          autofocus: true,
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(25),
-                          ],
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
+            child: SizedBox(
+              height: 45,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  BlocBuilder<TextCubit, String>(
+                    builder: (context, text) {
+                      if (isEditing) {
+                        return Expanded(
+                          child: CupertinoTextField(
+                            controller: _controller,
+                            focusNode: _focusNode,
+                            autofocus: true,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(maxLength),
+                            ],
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: CupertinoColors.systemGrey,
+                              ),
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            contentPadding: const EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 12),
-                            isDense: true, // Reduces the height
+                            style: const TextStyle(
+                              fontSize: 20,
+                            ),
+                            onSubmitted: (newValue) {
+                              context.read<TextCubit>().updateTitle(newValue);
+                              if (onTextChanged != null) {
+                                onTextChanged!(newValue);
+                              }
+                              FocusScope.of(context).unfocus();
+                              context.read<TitleCubit>().toggleEditing();
+                            },
+                            onTapOutside: (event) {
+                              context
+                                  .read<TextCubit>()
+                                  .updateTitle(_controller.text);
+                              if (onTextChanged != null) {
+                                onTextChanged!(_controller.text);
+                              }
+                              FocusScope.of(context).unfocus();
+                              context.read<TitleCubit>().toggleEditing();
+                            },
                           ),
-                          style: const TextStyle(
-                            fontSize: 20,
+                        );
+                      } else {
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child: Text(
+                            text.isEmpty ? 'Double tap to edit' : text,
+                            style: const TextStyle(
+                              fontSize: 19,
+                              letterSpacing: 0.5
+                            ),
                           ),
-                          // Update title when the user finishes editing
-                          onSubmitted: (newValue) {
-                            context.read<TextCubit>().updateTitle(newValue);
-                            // Notify parent via callback
-                            if (onTitleChanged != null) {
-                              onTitleChanged!(newValue);
-                            }
-                            FocusScope.of(context).unfocus(); // Remove focus
-                            context
-                                .read<TitleCubit>()
-                                .toggleEditing(); // Exit editing mode
-                          },
-                          onTapOutside: (newValue) {
-                            context
-                                .read<TextCubit>()
-                                .updateTitle(_controller.text);
-                            // Notify parent via callback
-                            if (onTitleChanged != null) {
-                              onTitleChanged!(_controller.text);
-                            }
-                            FocusScope.of(context).unfocus(); // Remove focus
-                            context
-                                .read<TitleCubit>()
-                                .toggleEditing(); // Exit editing mode
-                          });
-                    },
-                  )
-                : BlocBuilder<TextCubit, String>(
-                    builder: (context, title) {
-                      return Text(
-                        title.isEmpty ? 'Tap to edit' : title,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.black87,
-                        ),
-                      );
+                        );
+                      }
                     },
                   ),
+                  CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: onDelete,
+                    child: Icon(
+                      CupertinoIcons.delete,
+                      color: CupertinoColors.destructiveRed,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           );
         },
       ),
