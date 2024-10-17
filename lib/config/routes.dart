@@ -67,26 +67,27 @@ class Routes {
       //   ),
       // ),
       GoRoute(
-          name: SingleSpinnerWheel.tag,
-          path: '/single-spinner-wheel',
-          builder: (context, state) {
-            SpinnerWheelModel? wheelModel =
-                state.extra as SpinnerWheelModel? ?? SpinnerWheelModel();
-            return MultiBlocProvider(
-              providers: [
-                BlocProvider(
-                  create: (context) => SingleSpinnerWheelCubit(wheelModel),
-                ),
-                BlocProvider(
-                  create: (_) => TitleCubit(),
-                ),
-              ],
-              child: SingleSpinnerWheel(
-                wheelModel: wheelModel,
-                isNew: wheelModel.isEmpty,
+        name: SingleSpinnerWheel.tag,
+        path: '/single-spinner-wheel',
+        builder: (context, state) {
+          SpinnerWheelModel? wheelModel =
+              state.extra as SpinnerWheelModel? ?? SpinnerWheelModel();
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => SingleSpinnerWheelCubit(wheelModel),
               ),
-            );
-          }),
+              BlocProvider(
+                create: (_) => TitleCubit(),
+              ),
+            ],
+            child: SingleSpinnerWheel(
+              wheelModel: wheelModel,
+              isNew: wheelModel.isEmpty,
+            ),
+          );
+        },
+      ),
     ],
   );
 }

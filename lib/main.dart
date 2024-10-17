@@ -21,18 +21,6 @@ class SpinAroundApp extends StatefulWidget {
 }
 
 class _SpinAroundAppState extends State<SpinAroundApp> {
-  int count = 1;
-  List<FortuneItem> itemList = [
-    FortuneItem(child: Text('Han Solo')),
-    FortuneItem(child: Text('Yoda')),
-    FortuneItem(child: Text('Obi-Wan Kenobi')),
-  ];
-  void addItem() {
-    // setState(() {
-    itemList.add(FortuneItem(child: Text('Item #$count')));
-    // });
-  }
-
   @override
   Widget build(BuildContext context) {
     return CupertinoApp.router(
@@ -42,30 +30,6 @@ class _SpinAroundAppState extends State<SpinAroundApp> {
       title: 'Spin Around',
       debugShowCheckedModeBanner: false,
       routerConfig: Routes.router,
-      // home: Scaffold(
-      //   body: Column(
-      //     children: [
-      //       Expanded(
-      //         child: FortuneWheel(
-      //           physics: CircularPanPhysics(
-      //             duration: Duration(seconds: 1),
-      //             curve: Curves.decelerate,
-      //           ),
-      //           hapticImpact: HapticImpact.medium,
-      //           onFling: () {
-      //             // controller.add(1);
-      //           },
-      //           // selected: controller.stream,
-      //           items: itemList,
-      //         ),
-      //       ),
-      //       ElevatedButton(
-      //         onPressed: addItem,
-      //         child: Text('Add Item'),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }

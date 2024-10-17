@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spin_around/data/models/spinner_wheel_model.dart';
 import 'package:spin_around/modules/spinner_wheel/bloc/spinner_wheel_list_cubit/spinner_wheel_list_cubit.dart';
 import 'package:spin_around/modules/spinner_wheel/views/single_spinner_wheel.dart';
+import 'package:spin_around/modules/spinner_wheel/widgets/spinner_wheel_widget.dart';
 import 'package:super_context_menu/super_context_menu.dart';
 import 'package:super_cupertino_navigation_bar/super_cupertino_navigation_bar.dart';
 
@@ -132,9 +136,24 @@ class SpinnerWheelListScreen extends StatelessWidget {
   }) {
     return ContextMenuWidget(
       child: wheelListTile(context, wheelModel: wheelModel),
-      menuProvider: (_) {
+      previewBuilder: (context, child) {
+        return SizedBox(
+          height: 400,
+          child: CupertinoPageScaffold(
+              child: SpinnerWheelWidget(
+            wheelModel: wheelModel,
+          )),
+        );
+      },
+      menuProvider: (request) {
         return Menu(
           children: [
+            // MenuAction(
+            //   title: 'Spin the Wheel',
+            //   callback: () {
+            //     controller.add(Fortune.randomInt(0, wheelModel.itemList.length));
+            //   },
+            // ),
             MenuAction(
               title: wheelModel.isPinned ? 'Unpin' : 'Pin',
               image: MenuImage.icon(
