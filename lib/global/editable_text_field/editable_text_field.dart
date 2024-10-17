@@ -94,9 +94,7 @@ class EditableTitleWidget extends StatelessWidget {
                           child: Text(
                             text.isEmpty ? 'Double tap to edit' : text,
                             style: const TextStyle(
-                              fontSize: 19,
-                              letterSpacing: 0.5
-                            ),
+                                fontSize: 19, letterSpacing: 0.5),
                           ),
                         );
                       }

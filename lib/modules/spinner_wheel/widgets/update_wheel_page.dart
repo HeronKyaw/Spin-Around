@@ -82,7 +82,8 @@ class UpdateWheelPage extends StatelessWidget {
                 ),
                 CupertinoButton(
                   padding: EdgeInsets.zero,
-                  child: const Icon(CupertinoIcons.add, color: CupertinoColors.activeBlue),
+                  child: const Icon(CupertinoIcons.add,
+                      color: CupertinoColors.activeBlue),
                   onPressed: () {
                     context.read<UpdateWheelCubit>().addItem('New Item');
                   },
@@ -99,7 +100,9 @@ class UpdateWheelPage extends StatelessWidget {
                       return EditableTitleWidget(
                         initialText: state.items[index],
                         onTextChanged: (newText) {
-                          context.read<UpdateWheelCubit>().updateItem(index, newText);
+                          context
+                              .read<UpdateWheelCubit>()
+                              .updateItem(index, newText);
                         },
                         onDelete: () {
                           if (state.items.length > 2) {
