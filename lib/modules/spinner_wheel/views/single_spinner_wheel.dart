@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:spin_around/data/models/spinner_wheel_model.dart';
 import 'package:spin_around/modules/spinner_wheel/bloc/single_spinner_wheel_cubit/single_spinner_wheel_cubit.dart';
 import 'package:spin_around/modules/spinner_wheel/widgets/spinner_wheel_widget.dart';

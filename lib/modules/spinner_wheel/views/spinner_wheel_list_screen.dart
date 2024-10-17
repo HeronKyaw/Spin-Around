@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spin_around/data/models/spinner_wheel_model.dart';
 import 'package:spin_around/modules/spinner_wheel/bloc/spinner_wheel_list_cubit/spinner_wheel_list_cubit.dart';
