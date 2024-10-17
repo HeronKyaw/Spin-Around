@@ -9,11 +9,7 @@ class SpinnerWheelModel {
     this.id = 0,
     this.title = 'Untitled Wheel',
     this.modifiedDate = '',
-    this.itemList = const [
-      'Marvel',
-      'DC',
-      'The Boys'
-    ],
+    this.itemList = const ['Marvel', 'DC', 'The Boys'],
     this.isPinned = false,
   });
 
