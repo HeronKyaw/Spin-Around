@@ -98,7 +98,8 @@ class UpdateWheelPage extends StatelessWidget {
                               CustomDialog.showWarningDialog(
                                 context,
                                 title: 'Remove Item',
-                                body: 'You must have at least two items to work.',
+                                body:
+                                    'You must have at least two items to work.',
                               );
                             }
                           },
