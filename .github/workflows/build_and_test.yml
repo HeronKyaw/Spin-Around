@@ -1,13 +1,13 @@
-# Note: In a yml each level is padded by 2 spaces
-name: Flutter
+name: Build and Test
 
 on:
-  # Runs this action when you push on main
   push:
-    branches: [ "main" ]
-  # Runs this when a PR against main is created
+    branches:
+      - '**'  # This triggers on all branches
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
+      - development  # This triggers on PRs to main and development
 
 jobs:
   flutter_job:
