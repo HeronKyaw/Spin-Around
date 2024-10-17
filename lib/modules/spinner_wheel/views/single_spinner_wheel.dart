@@ -20,34 +20,48 @@ class SingleSpinnerWheel extends StatefulWidget {
 }
 
 class _SingleSpinnerWheelState extends State<SingleSpinnerWheel> {
-  final StreamController<int> controller = StreamController<int>();
+  final StreamController<int> wheelController = StreamController<int>();
+  final StreamController<bool> ignorePointerController =
+      StreamController<bool>.broadcast();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SingleSpinnerWheelCubit, SpinnerWheelModel>(
       builder: (context, state) {
-        return CupertinoPageScaffold(
-          navigationBar: CupertinoNavigationBar(
-            middle: Text(
-              state.title,
-            ),
-            previousPageTitle: 'Home',
-            trailing: CupertinoButton(
-              padding: EdgeInsets.only(right: 15),
-              onPressed: () {
-                showEditModal(context, state);
-              },
-              child: const Text('Edit'),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SpinnerWheelWidget(
-              wheelModel: state,
-              controller: controller,
-            ),
-          ),
-        );
+        return StreamBuilder<bool>(
+            stream: ignorePointerController.stream,
+            initialData: false,
+            builder: (context, snapshot) {
+              final ignorePointer = snapshot.data ?? false;
+
+              return CupertinoPageScaffold(
+                navigationBar: CupertinoNavigationBar(
+                  middle: Text(
+                    state.title,
+                  ),
+                  previousPageTitle: 'Home',
+                  trailing: CupertinoButton(
+                    padding: EdgeInsets.only(right: 15),
+                    onPressed: ignorePointer ? null : () {
+                      showEditModal(context, state);
+                    },
+                    child: const Text('Edit'),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: IgnorePointer(
+                    ignoring: ignorePointer,
+                    child: SpinnerWheelWidget(
+                      wheelModel: state,
+                      wheelController: wheelController,
+                      ignorePointerController: ignorePointerController,
+                      isIgnore: ignorePointer,
+                    ),
+                  ),
+                ),
+              );
+            });
       },
     );
   }
