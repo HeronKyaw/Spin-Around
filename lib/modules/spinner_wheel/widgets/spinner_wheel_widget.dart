@@ -37,59 +37,58 @@ class _SpinnerWheelWidgetState extends State<SpinnerWheelWidget> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: 400,
-            child: FortuneWheel(
-              rotationCount: 70,
-              selected: widget.wheelController?.stream ??
-                  const Stream<int>.empty(),
-              animateFirst: false,
-              onAnimationStart: () {
-                ignorePointerController.add(true);
-              },
-              onAnimationEnd: () {
-                ignorePointerController.add(false);
-                CustomDialog.showWarningDialog(
-                  context,
-                  title: widget.wheelModel.itemList[currentValue],
-                );
-              },
-              physics: CircularPanPhysics(
-                duration: const Duration(seconds: 1),
-                curve: Curves.decelerate,
-              ),
-              hapticImpact: HapticImpact.medium,
-              onFling: () {
-                currentValue = Fortune.randomInt(
-                    0, widget.wheelModel.itemList.length);
-                widget.wheelController?.add(
-                  currentValue,
-                );
-              },
-              items: widget.wheelModel.itemList
-                  .map((w) => FortuneItem(child: Text(w)))
-                  .toList(),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          CupertinoButton.filled(
-            onPressed: widget.isIgnore
-                ? null
-                : () {
-              widget.wheelController?.add(Fortune.randomInt(
-                  0, widget.wheelModel.itemList.length));
+        child: Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(
+          height: 400,
+          child: FortuneWheel(
+            rotationCount: 70,
+            selected:
+                widget.wheelController?.stream ?? const Stream<int>.empty(),
+            animateFirst: false,
+            onAnimationStart: () {
+              ignorePointerController.add(true);
             },
-            child: Text('Spin'),
+            onAnimationEnd: () {
+              ignorePointerController.add(false);
+              CustomDialog.showWarningDialog(
+                context,
+                title: widget.wheelModel.itemList[currentValue],
+              );
+            },
+            physics: CircularPanPhysics(
+              duration: const Duration(seconds: 1),
+              curve: Curves.decelerate,
+            ),
+            hapticImpact: HapticImpact.medium,
+            onFling: () {
+              currentValue =
+                  Fortune.randomInt(0, widget.wheelModel.itemList.length);
+              widget.wheelController?.add(
+                currentValue,
+              );
+            },
+            items: widget.wheelModel.itemList
+                .map((w) => FortuneItem(child: Text(w)))
+                .toList(),
           ),
-        ],
-      )
-    );
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        CupertinoButton.filled(
+          onPressed: widget.isIgnore
+              ? null
+              : () {
+                  widget.wheelController?.add(
+                      Fortune.randomInt(0, widget.wheelModel.itemList.length));
+                },
+          child: Text('Spin'),
+        ),
+      ],
+    ));
   }
 
   @override

@@ -42,9 +42,11 @@ class _SingleSpinnerWheelState extends State<SingleSpinnerWheel> {
                   previousPageTitle: 'Home',
                   trailing: CupertinoButton(
                     padding: EdgeInsets.only(right: 15),
-                    onPressed: ignorePointer ? null : () {
-                      showEditModal(context, state);
-                    },
+                    onPressed: ignorePointer
+                        ? null
+                        : () {
+                            showEditModal(context, state);
+                          },
                     child: const Text('Edit'),
                   ),
                 ),
