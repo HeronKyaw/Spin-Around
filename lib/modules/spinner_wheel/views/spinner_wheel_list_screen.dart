@@ -139,20 +139,18 @@ class SpinnerWheelListScreen extends StatelessWidget {
         return SizedBox(
           height: 400,
           child: CupertinoPageScaffold(
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
               child: SpinnerWheelWidget(
-            wheelModel: wheelModel,
-          )),
+                wheelModel: wheelModel,
+              ),
+            ),
+          ),
         );
       },
       menuProvider: (request) {
         return Menu(
           children: [
-            // MenuAction(
-            //   title: 'Spin the Wheel',
-            //   callback: () {
-            //     controller.add(Fortune.randomInt(0, wheelModel.itemList.length));
-            //   },
-            // ),
             MenuAction(
               title: wheelModel.isPinned ? 'Unpin' : 'Pin',
               image: MenuImage.icon(

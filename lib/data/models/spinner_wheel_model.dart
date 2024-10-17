@@ -4,6 +4,7 @@ class SpinnerWheelModel {
   String modifiedDate;
   List<String> itemList;
   bool isPinned;
+  bool isNew;
 
   SpinnerWheelModel({
     this.id = 0,
@@ -11,7 +12,6 @@ class SpinnerWheelModel {
     this.modifiedDate = '',
     this.itemList = const ['Marvel', 'DC', 'The Boys'],
     this.isPinned = false,
+    this.isNew = false,
   });
-
-  bool get isEmpty => title.isEmpty && itemList.isEmpty;
 }

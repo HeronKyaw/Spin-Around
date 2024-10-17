@@ -28,7 +28,9 @@ class _SpinAroundAppState extends State<SpinAroundApp> {
       ),
       title: 'Spin Around',
       debugShowCheckedModeBanner: false,
-      routerConfig: Routes.router,
+      routeInformationProvider: Routes.router.routeInformationProvider,
+      routeInformationParser: Routes.router.routeInformationParser,
+      routerDelegate: Routes.router.routerDelegate,
     );
   }
 }
