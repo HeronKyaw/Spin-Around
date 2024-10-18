@@ -8,6 +8,4 @@ sealed class BottomNavState extends Equatable {
 
 class HomeTab extends BottomNavState {}
 
-class SearchTab extends BottomNavState {}
-
-class ProfileTab extends BottomNavState {}
+class SettingTab extends BottomNavState {}

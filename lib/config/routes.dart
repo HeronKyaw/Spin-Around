@@ -6,6 +6,8 @@ import 'package:spin_around/config/app_config.dart';
 import 'package:spin_around/data/models/spinner_wheel_model.dart';
 import 'package:spin_around/global/editable_text_field/editabe_text_field_cubit.dart';
 import 'package:spin_around/modules/auth/bloc/auth_cubit/auth_cubit.dart';
+import 'package:spin_around/modules/auth/views/auth_screen.dart';
+import 'package:spin_around/modules/auth/views/verify_email_screen.dart';
 import 'package:spin_around/modules/profile/bloc/create_profile_cubit/create_profile_cubit.dart';
 import 'package:spin_around/modules/profile/views/create_profile.dart';
 import 'package:spin_around/modules/auth/views/splash_screen.dart';
@@ -18,7 +20,7 @@ import 'package:spin_around/modules/spinner_wheel/widgets/update_wheel_page.dart
 
 class Routes {
   static final GoRouter router = GoRouter(
-    initialLocation: '/home',
+    initialLocation: '/',
     debugLogDiagnostics: true,
     navigatorKey: navigatorKey,
     routes: [
@@ -32,6 +34,30 @@ class Routes {
             ),
           ],
           child: SplashScreen(),
+        ),
+      ),
+      GoRoute(
+        name: AuthScreen.tag,
+        path: '/auth',
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => AuthCubit(),
+            ),
+          ],
+          child: AuthScreen(),
+        ),
+      ),
+      GoRoute(
+        name: VerifyEmailScreen.tag,
+        path: '/verify-email',
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => AuthCubit(),
+            ),
+          ],
+          child: VerifyEmailScreen(),
         ),
       ),
       GoRoute(

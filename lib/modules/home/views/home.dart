@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spin_around/modules/auth/bloc/auth_cubit/auth_cubit.dart';
 import 'package:spin_around/modules/home/bloc/bottom_nav_cubit/bottom_nav_cubit.dart';
+import 'package:spin_around/modules/setting/views/setting_screen.dart';
 import 'package:spin_around/modules/spinner_wheel/bloc/spinner_wheel_list_cubit/spinner_wheel_list_cubit.dart';
 import 'package:spin_around/modules/spinner_wheel/views/spinner_wheel_list_screen.dart';
 
@@ -21,10 +23,15 @@ class Home extends StatelessWidget {
                 create: (context) => SpinnerWheelListCubit()..fetchData(),
                 child: SpinnerWheelListScreen(),
               );
-            } else if (state is SearchTab) {
-              return const Center(child: Text('Search Page'));
-            } else if (state is ProfileTab) {
-              return const Center(child: Text('Profile Page'));
+            } else if (state is SettingTab) {
+              return MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => AuthCubit(),
+                  ),
+                ],
+                child: SettingScreen(),
+              );
             }
             return const SizedBox.shrink();
           },

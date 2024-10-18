@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CLIENT_ID</key>
+	<string>535407607880-lalps4i4nrjm6l5appduiiiven88c8ab.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.535407607880-lalps4i4nrjm6l5appduiiiven88c8ab</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCO_NgdjNkurXGO7n6Uo4uVGWJKp9x6qvg</string>
 	<key>GCM_SENDER_ID</key>
@@ -9,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.spinAround</string>
+	<string>com.wunnakyaw.spinAround</string>
 	<key>PROJECT_ID</key>
 	<string>spin-around-wunnakyaw</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:535407607880:ios:f819846929bfdb5383987d</string>
+	<string>1:535407607880:ios:c03f5c024218f8c783987d</string>
 </dict>
 </plist>

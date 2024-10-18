@@ -11,9 +11,7 @@ class BottomNavCubit extends Cubit<BottomNavState> {
       case 0:
         emit(HomeTab());
       case 1:
-        emit(SearchTab());
-      case 2:
-        emit(ProfileTab());
+        emit(SettingTab());
     }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomDialog {
   static void showWarningDialog(
@@ -14,7 +15,7 @@ class CustomDialog {
         actions: <CupertinoDialogAction>[
           CupertinoDialogAction(
             onPressed: () {
-              Navigator.pop(context);
+              context.pop();
             },
             child: const Text('OK'),
           ),
