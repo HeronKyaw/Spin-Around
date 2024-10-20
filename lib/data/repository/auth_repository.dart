@@ -1,54 +1,126 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:spin_around/utils/auth_service.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepository {
-  final AuthService _authService = AuthService();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Get current user
-  User? get currentUser => _authService.currentUser;
+  User? get currentUser {
+    _auth.currentUser?.reload();
+    return _auth.currentUser;
+  }
 
-  // Sign in with email and password
   Future<User?> signInWithEmailAndPassword(String email, String password) async {
-    return await _authService.signInWithEmailAndPassword(email, password);
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      return userCredential.user;
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
   }
 
-  // Register (sign up) with email and password
   Future<User?> registerWithEmailAndPassword(String email, String password) async {
-    return await _authService.registerWithEmailAndPassword(email, password);
+    try {
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      return userCredential.user;
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
   }
 
-  // Sign out
   Future<void> signOut() async {
-    await _authService.signOut();
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      log(e.toString());
+    }
   }
 
-  // Reset password
   Future<void> resetPassword(String email) async {
-    await _authService.resetPassword(email);
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      log(e.toString());
+    }
   }
 
-  // Sign in anonymously
   Future<User?> signInAnonymously() async {
-    return await _authService.signInAnonymously();
+    try {
+      UserCredential userCredential = await _auth.signInAnonymously();
+      return userCredential.user;
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
   }
 
-  // Send email verification
   Future<void> sendEmailVerification() async {
-    await _authService.sendEmailVerification();
+    try {
+      User? user = _auth.currentUser;
+      if (user != null && !user.emailVerified) {
+        await user.sendEmailVerification();
+      }
+    } catch (e) {
+      log(e.toString());
+    }
   }
 
-  // Update password
   Future<void> updatePassword(String newPassword) async {
-    await _authService.updatePassword(newPassword);
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        await user.updatePassword(newPassword);
+      }
+    } catch (e) {
+      log(e.toString());
+    }
   }
 
-  // Delete account
   Future<void> deleteAccount() async {
-    await _authService.deleteAccount();
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        await user.delete();
+      }
+    } catch (e) {
+      log(e.toString());
+    }
   }
 
-  // Reauthenticate with email/password
+  Future<User?> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication? googleAuth =
+      await googleUser?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      UserCredential userCredential = await _auth.signInWithCredential(
+          credential);
+
+      return userCredential.user;
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
   Future<void> reauthenticateWithEmail(String email, String password) async {
-    await _authService.reauthenticateWithEmail(email, password);
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        AuthCredential credential = EmailAuthProvider.credential(email: email, password: password);
+        await user.reauthenticateWithCredential(credential);
+      }
+    } catch (e) {
+      log(e.toString());
+    }
   }
 }

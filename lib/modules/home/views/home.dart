@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spin_around/data/repository/auth_repository.dart';
 import 'package:spin_around/modules/auth/bloc/auth_cubit/auth_cubit.dart';
 import 'package:spin_around/modules/home/bloc/bottom_nav_cubit/bottom_nav_cubit.dart';
 import 'package:spin_around/modules/setting/views/setting_screen.dart';
@@ -27,7 +28,7 @@ class Home extends StatelessWidget {
               return MultiBlocProvider(
                 providers: [
                   BlocProvider(
-                    create: (context) => AuthCubit(),
+                    create: (context) => AuthCubit(AuthRepository()),
                   ),
                 ],
                 child: SettingScreen(),

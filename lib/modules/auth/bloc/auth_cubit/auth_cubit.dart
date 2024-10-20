@@ -2,13 +2,14 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spin_around/config/app_config.dart';
+import 'package:spin_around/data/repository/auth_repository.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final AuthRepository _authRepo;
 
-  AuthCubit() : super(AuthInitial());
+  AuthCubit(this._authRepo) : super(AuthInitial());
 
   // Toggle between login and sign-up mode
   void toggleAuthMode() {
@@ -25,12 +26,11 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> signInWithEmail(String email, String password) async {
     emit(AuthLoading(state.mode));
     try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      if (userCredential.user != null) {
+      User? user = await _authRepo.signInWithEmailAndPassword(email, password);
+      if (user != null) {
         emit(AuthSuccess(
           mode: state.mode,
-          user: userCredential.user!,
+          user: user,
         ));
       } else {
         emit(AuthError(
@@ -47,12 +47,11 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> signUpWithEmail(String email, String password) async {
     emit(AuthLoading(state.mode));
     try {
-      UserCredential userCredential = await _auth
-          .createUserWithEmailAndPassword(email: email, password: password);
-      if (userCredential.user != null) {
+      User? user = await _authRepo.registerWithEmailAndPassword(email, password);
+      if (user != null) {
         emit(AuthSuccess(
           mode: state.mode,
-          user: userCredential.user!,
+          user: user,
         ));
       } else {
         emit(AuthError(
@@ -88,7 +87,7 @@ class AuthCubit extends Cubit<AuthState> {
   // Reset password via email
   Future<void> resetPassword(String email) async {
     try {
-      await _auth.sendPasswordResetEmail(email: email);
+      await _authRepo.resetPassword(email);
     } catch (e) {
       emit(AuthError(e.toString(), state.mode));
     }
@@ -98,7 +97,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> logout() async {
     emit(AuthLoading(state.mode));
     try {
-      await _auth.signOut();
+      await _authRepo.signOut();
       emit(LogoutSuccess());
     } catch (e) {
       emit(AuthError(e.toString(), state.mode));
@@ -107,9 +106,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> sendEmailVerification() async {
     try {
-      User? user = FirebaseAuth.instance.currentUser;
-
-      await user?.sendEmailVerification(); // Assuming you are using Firebase
+      await _authRepo.sendEmailVerification(); // Assuming you are using Firebase
       emit(EmailVerificationSent());
     } catch (e) {
       emit(AuthError(
@@ -121,9 +118,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> checkEmailVerified() async {
     try {
-      User? user = FirebaseAuth.instance.currentUser;
-      // Reload the user to get updated verification status
-      await user?.reload();
+      User? user = _authRepo.currentUser;
       if (user != null && user.emailVerified) {
         emit(AuthSuccess(
           user: user,
@@ -135,6 +130,28 @@ class AuthCubit extends Cubit<AuthState> {
     } catch (e) {
       emit(AuthError(
         'Failed to check verification status.',
+        state.mode,
+      ));
+    }
+  }
+
+  Future<void> signInWithGoogle() async {
+    try {
+      User? user = await _authRepo.signInWithGoogle();
+      if (user != null && user.emailVerified) {
+        emit(AuthSuccess(
+          user: user,
+          mode: state.mode,
+        ));
+      } else {
+        emit(AuthError(
+          'Failed to sign in with Google.',
+          state.mode,
+        ));
+      }
+    } catch (e) {
+      emit(AuthError(
+        e.toString(),
         state.mode,
       ));
     }

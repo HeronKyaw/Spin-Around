@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sheet/route.dart';
 import 'package:spin_around/config/app_config.dart';
 import 'package:spin_around/data/models/spinner_wheel_model.dart';
+import 'package:spin_around/data/repository/auth_repository.dart';
 import 'package:spin_around/global/editable_text_field/editabe_text_field_cubit.dart';
 import 'package:spin_around/modules/auth/bloc/auth_cubit/auth_cubit.dart';
 import 'package:spin_around/modules/auth/views/auth_screen.dart';
@@ -30,7 +31,7 @@ class Routes {
         builder: (context, state) => MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context) => AuthCubit(),
+              create: (context) => AuthCubit(AuthRepository()),
             ),
           ],
           child: SplashScreen(),
@@ -42,7 +43,7 @@ class Routes {
         builder: (context, state) => MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context) => AuthCubit(),
+              create: (context) => AuthCubit(AuthRepository()),
             ),
           ],
           child: AuthScreen(),
@@ -54,7 +55,7 @@ class Routes {
         builder: (context, state) => MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context) => AuthCubit(),
+              create: (context) => AuthCubit(AuthRepository()),
             ),
           ],
           child: VerifyEmailScreen(),

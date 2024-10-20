@@ -34,7 +34,7 @@ class AuthError extends AuthState {
 }
 
 class AuthSuccess extends AuthState {
-  final User user; // Add a user object (e.g., from Firebase or your auth model)
+  final User user;
 
   const AuthSuccess({required this.user, required super.mode})
       : super(isLoading: false);
